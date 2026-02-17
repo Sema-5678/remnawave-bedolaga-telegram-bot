@@ -1,3 +1,6 @@
+
+import os
+
 import redis.asyncio as redis
 import structlog
 from aiogram import Bot, Dispatcher, types
@@ -149,6 +152,11 @@ async def setup_bot() -> tuple[Bot, Dispatcher]:
     dp.pre_checkout_query.middleware(AuthMiddleware())
     dp.message.middleware(SubscriptionStatusMiddleware())
     dp.callback_query.middleware(SubscriptionStatusMiddleware())
+
+    if os.getenv("ENABLE_YOOMONEY", False):
+        from app.local.wiring import setup_local_topup
+        setup_local_topup(dp, bot)
+
     start.register_handlers(dp)
     menu.register_handlers(dp)
     subscription.register_handlers(dp)

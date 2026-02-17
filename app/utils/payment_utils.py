@@ -8,6 +8,16 @@ def get_available_payment_methods() -> list[dict[str, str]]:
     """
     methods = []
 
+    methods.append(
+            {
+                'id': 'yoomoney',
+                'name': 'Юмани',
+                'icon': '💳',
+                'description': 'карты рф',
+                'callback': 'yoomoney_topup',
+            }
+        )
+
     if settings.TELEGRAM_STARS_ENABLED:
         methods.append(
             {

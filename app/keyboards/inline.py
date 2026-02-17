@@ -1474,6 +1474,16 @@ def get_payment_methods_keyboard(amount_kopeks: int, language: str = DEFAULT_LAN
         if amount_kopeks > 0:
             return f'topup_amount|{method}|{amount_kopeks}'
         return f'topup_{method}'
+    
+
+    keyboard.append(
+            [
+                InlineKeyboardButton(
+                    text=texts.t('PAYMENT_YOOMONEY', '💳 Юмани'), callback_data='yoomoney_topup'
+                )
+            ]
+        )
+    has_direct_payment_methods = True
 
     if settings.TELEGRAM_STARS_ENABLED:
         keyboard.append(
